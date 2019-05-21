@@ -28,35 +28,35 @@ public class Course {
 		return studentId;
 	}
 	
-	public String yearMonthGraduated(){
+	public String setteryearMonthGraduated(){
 		return yearMonthGraduated;
 	}
 	
-	public String firstMajor(){
+	public String setterfirstMajor(){
 		return firstMajor;
 	}
 	
-	public String secondMajor(){
+	public String settersecondMajor(){
 		return secondMajor;
 	}
 	
-	public String courseCode(){
+	public String settercourseCode(){
 		return courseCode;
 	}
 	
-	public String courseName(){
+	public String settercourseName(){
 		return courseName;
 	}
 	
-	public String courseCredit(){
+	public String settercourseCredit(){
 		return courseCredit;
 	}
 	
-	public int yearTaken(){
+	public int setteryearTaken(){
 		return yearTaken;
 	}
 	
-	public int semesterCourseTaken(){
+	public int settersemesterCourseTaken(){
 		return semesterCourseTaken;
 	}
 }
