@@ -7,22 +7,22 @@ import java.util.TreeMap;
 
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
-import edu.handong.analysise.utils.NotEnoughArgumentException;
-import edu.handong.analysise.utils.Utils;
+import edu.handong.analysis.utils.NotEnoughArgumentException;
+import edu.handong.analysis.utils.Utils;
 
 public class HGUCoursePatternAnalyzer {
 
 	private HashMap<String,Student> students;
 	
 	/**
-	 * This method runs our analysis logic to save the number courses taken by each student per semester in a result file.
+	 * This method runs our analysis logic to save the number courses taken by each student per semester in a result file. 결과 파일에 각 학생당 한 학기의 과목수를 저장하는 로직입니다.
 	 * Run method must not be changed!!
 	 * @param args
 	 */
 	public void run(String[] args) {
 		
 		try {
-			// when there are not enough arguments from CLI, it throws the NotEnoughArgmentException which must be defined by you.
+			// when there are not enough arguments from CLI, it throws the NotEnoughArgmentException which must be defined by you. CLI를 실행하여서 입력 값이 원하는 입력값이 아닐 경우 오류 메세지를 따로 너가 정의해서 출력해야 한다.
 			if(args.length<2)
 				throw new NotEnoughArgumentException();
 		} catch (NotEnoughArgumentException e) {
@@ -30,8 +30,8 @@ public class HGUCoursePatternAnalyzer {
 			System.exit(0);
 		}
 		
-		String dataPath = args[0]; // csv file to be analyzed
-		String resultPath = args[1]; // the file path where the results are saved.
+		String dataPath = args[0]; // csv file to be analyzed 입력 받은 파일의 장소를 저장하는 스트링
+		String resultPath = args[1]; // the file path where the results are saved. 결과 파일을 저장할 위치를 저장한 스트링
 		ArrayList<String> lines = Utils.getLines(dataPath, true);
 		
 		students = loadStudentCourseRecords(lines);
