@@ -13,6 +13,50 @@ public class Course {
 	private int semesterCourseTaken;
 	
 	public Course(String line) {
-		
+		studentId = line.split(",")[0].trim();
+		yearMonthGraduated = line.split(",")[1].trim();
+		firstMajor = line.split(",")[2].trim();
+		secondMajor = line.split(",")[3].trim();
+		courseCode = line.split(",")[4].trim();
+		courseName = line.split(",")[5].trim();
+		courseCredit = line.split(",")[6].trim();
+		yearTaken = Integer.parseInt(line.split(",")[7].trim());
+		semesterCourseTaken = Integer.parseInt(line.split(",")[8].trim());
+	}
+	
+	public String setterId(){
+		return studentId;
+	}
+	
+	public String yearMonthGraduated(){
+		return yearMonthGraduated;
+	}
+	
+	public String firstMajor(){
+		return firstMajor;
+	}
+	
+	public String secondMajor(){
+		return secondMajor;
+	}
+	
+	public String courseCode(){
+		return courseCode;
+	}
+	
+	public String courseName(){
+		return courseName;
+	}
+	
+	public String courseCredit(){
+		return courseCredit;
+	}
+	
+	public int yearTaken(){
+		return yearTaken;
+	}
+	
+	public int semesterCourseTaken(){
+		return semesterCourseTaken;
 	}
 }

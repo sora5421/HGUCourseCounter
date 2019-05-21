@@ -56,6 +56,14 @@ public class HGUCoursePatternAnalyzer {
 		//키로 학생들의 학번을 value로는 student객체를 형성하는 메소드 아다.
 		// TODO: Implement this method
 		
+		int listSize = lines.size();
+		for(int position = 0; position < listSize; position++) {
+			Course course = new Course(lines.get(position));
+			Student student = new Student(course.setterId());
+			student.addCourse(course);
+		}
+		
+		
 		return null; // do not forget to return a proper variable.
 	}
 
