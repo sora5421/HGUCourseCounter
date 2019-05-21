@@ -32,11 +32,11 @@ public class HGUCoursePatternAnalyzer {
 		
 		String dataPath = args[0]; // csv file to be analyzed 입력 받은 파일의 장소를 저장하는 스트링
 		String resultPath = args[1]; // the file path where the results are saved. 결과 파일을 저장할 위치를 저장한 스트링
-		ArrayList<String> lines = Utils.getLines(dataPath, true);
+		ArrayList<String> lines = Utils.getLines(dataPath, true); //파일을 읽어들여서 리스트에 저장하는 코드(단, true일때 첫번째 라인은 저장하지 않음)
 		
 		students = loadStudentCourseRecords(lines);
 		
-		// To sort HashMap entries by key values so that we can save the results by student ids in ascending order.
+		// To sort HashMap entries by key values so that we can save the results by student ids in ascending order. 항목을 학번의 오름차순으로 정렬하는 것
 		Map<String, Student> sortedStudents = new TreeMap<String,Student>(students); 
 		
 		// Generate result lines to be saved.
@@ -53,7 +53,7 @@ public class HGUCoursePatternAnalyzer {
 	 * @return
 	 */
 	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
-		
+		//키로 학생들의 학번을 value로는 student객체를 형성하는 메소드 아다.
 		// TODO: Implement this method
 		
 		return null; // do not forget to return a proper variable.
