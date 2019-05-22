@@ -2,6 +2,7 @@ package edu.handong.analysis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -55,16 +56,46 @@ public class HGUCoursePatternAnalyzer {
 	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
 		//키로 학생들의 학번을 value로는 student객체를 형성하는 메소드 아다.
 		// TODO: Implement this method
-		
+		HashMap<String,Student>save = new HashMap<String,Student>();
+		ArrayList<Course>cour = new ArrayList<Course>();
+			
 		int listSize = lines.size();
 		for(int position = 0; position < listSize; position++) {
 			Course course = new Course(lines.get(position));
-			Student student = new Student(course.setterId());
-			student.addCourse(course);
+			cour.add(course);	
+		}
+				
+		int i = 0;
+		while(true) {
+			//Course c1 = cour.get(i);
+			Student student = new Student(cour.get(i).setterId());
+			ArrayList<Course>taken = new ArrayList<Course>();
+			student.gettercourse(taken);
+			if(i == 0) {
+				student.addCourse(cour.get(i));
+				i++;
+			}
+			if(!cour.get(i-1).setterId().equals(cour.get(i).setterId())) {
+				student.addCourse(cour.get(i));
+				i++;
+			}
+			while(true) {
+				Course c2 = cour.get(i-1);
+				Course c3 = cour.get(i);
+				if(c2.setterId().equals(c3.setterId())) {
+					student.addCourse(c3);
+					i++;
+					if(i>=cour.size()) break;
+				}
+				else break;				
+			}
+			Course c4 = cour.get(i-1);
+			save.put(c4.setterId(),student);
+			if(i>=cour.size()) break;
 		}
 		
 		
-		return null; // do not forget to return a proper variable.
+		return save; // do not forget to return a proper variable.
 	}
 
 	/**
@@ -81,9 +112,27 @@ public class HGUCoursePatternAnalyzer {
 	 * @return
 	 */
 	private ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
+		//hashmap 데이터를 읽어 들어서 다시 라인으로 변환시키는 메소드
 		
-		// TODO: Implement this method
+		ArrayList<String>out = new ArrayList<String>();
+		 HashMap<String,Integer>Semester;
 		
-		return null; // do not forget to return a proper variable.
+		out.add(" StudentID, TotalNumberOfSemestersRegistered, Semester, NumCoursesTakenInTheSemester");
+		
+		Iterator<String> keySetIterator = sortedStudents.keySet().iterator();
+		while (keySetIterator.hasNext()) {
+		    String key = keySetIterator.next();
+		    
+		    Student student = sortedStudents.get(key);
+		    Semester = student.getSemestersByYearAndSemester();
+		    
+		    for(int i = 1; i < Semester.size()+1; i++) {
+		    	out.add(key + "," + Semester.size() + "," + i + "," + student.getNumCourseInNthSemester(i));
+		    }
+		}
+
+
+		
+		return out; // do not forget to return a proper variable.
 	}
 }

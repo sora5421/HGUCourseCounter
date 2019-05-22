@@ -10,20 +10,55 @@ public class Student {
 	private HashMap<String,Integer>semesterByYearAndSemester;
 	
 	public Student(String studentId) {
-		
+		this.studentId = studentId;
 	}
 	
 	public void addCourse(Course newRecord) {
-		
+		coursesTaken.add(newRecord);
 	}
 	
 	public HashMap<String,Integer>getSemestersByYearAndSemester(){
+		semesterByYearAndSemester = new HashMap<String,Integer>();
+		int i = 1;
+		for(Course course:coursesTaken) {
+			String year = String.valueOf(course.setteryearTaken());
+			String semester = String.valueOf(course.settersemesterCourseTaken());
+			String yearWithSemester = year + "-" + semester;
+			
+			if(!semesterByYearAndSemester.containsKey(yearWithSemester)){
+				semesterByYearAndSemester.put(yearWithSemester, i);
+				i++;
+			}
+		}
 		return semesterByYearAndSemester;
-		
 	}
 	
 	public int getNumCourseInNthSemester(int semester) {
+		HashMap<String,Integer>check;
+		int count = 0;
 		
-		return 0;
+		check = semesterByYearAndSemester;
+		for(Course course:coursesTaken) {
+			String year = String.valueOf(course.setteryearTaken());
+			String Semester = String.valueOf(course.settersemesterCourseTaken());
+			String yearWithSemester = year + "-" + Semester;
+			
+			if(check.get(yearWithSemester) == semester) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public String setterStudentId(){
+		return studentId;
+	}
+	
+	public ArrayList<Course> settercourse(){
+		return coursesTaken;
+	}
+	
+	public void gettercourse(ArrayList<Course> taken){
+		coursesTaken = taken;
 	}
 }
