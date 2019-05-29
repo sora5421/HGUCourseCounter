@@ -17,17 +17,20 @@ public class Student {
 		coursesTaken.add(newRecord);
 	}
 	
-	public HashMap<String,Integer>getSemestersByYearAndSemester(){
+	public HashMap<String,Integer>getSemestersByYearAndSemester(int start, int end){
 		semesterByYearAndSemester = new HashMap<String,Integer>();
 		int i = 1;
 		for(Course course:coursesTaken) {
 			String year = String.valueOf(course.setteryearTaken());
-			String semester = String.valueOf(course.settersemesterCourseTaken());
-			String yearWithSemester = year + "-" + semester;
-			
-			if(!semesterByYearAndSemester.containsKey(yearWithSemester)){
-				semesterByYearAndSemester.put(yearWithSemester, i);
-				i++;
+			int y = course.setteryearTaken();
+			if(y >= start && y <= end){
+				String semester = String.valueOf(course.settersemesterCourseTaken());
+				String yearWithSemester = year + "-" + semester;
+					
+				if(!semesterByYearAndSemester.containsKey(yearWithSemester)){
+					semesterByYearAndSemester.put(yearWithSemester, i);
+					i++;
+				}
 			}
 		}
 		return semesterByYearAndSemester;
