@@ -217,7 +217,7 @@ public class HGUCoursePatternAnalyzer {
 			 int TotalStudents = TotalStudent.get(number);
 			 int StudentsTaken = count.get(number);
 			 
-		    	out.add(String.valueOf(start)+","+String.valueOf(1)+","+code+","+name.get(0)+","+);
+		    	out.add(String.valueOf(start)+","+String.valueOf(1)+","+code+","+name.get(0)+);
 		    }
 		
 		
