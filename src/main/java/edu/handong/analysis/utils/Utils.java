@@ -60,7 +60,10 @@ public class Utils {
 	            	String line = ID+","+Graduated+","+firstMajor+","+secondMajor+","+courseCode+","+courseName+","+courseCredit+","+yearTaken+","+semesterCourseTaken; 
 	            	saveLine.add(line);
 	            }
-			} catch (FileNotFoundException e) {
+	            if(removeHeader) {
+	            	saveLine.remove(0);
+	            }
+			} catch (IOException e) {
 				System.out.println("The file path does not exist. Please check your CLI argument!");
 				System.exit(0);
 			}
@@ -112,17 +115,17 @@ public class Utils {
 			System.exit(0);
 		}
 		
-		if(analysis == "2" && coursecode == null) {
+		if(analysis.equals("2") && coursecode == null) {
 			printHelp(options);
 			System.exit(0);
 		}
-		if(analysis != "1" || analysis != "2") {
+		if(!analysis.equals("1") && !analysis.equals("2")) {
 			printHelp(options);
 			System.exit(0);
 		}
 		return true;
 	}
-
+	
 	private static void printHelp(Options options) {
 		HelpFormatter formatter = new HelpFormatter();
 		String header = "HGU Course Analyzer";
@@ -163,7 +166,7 @@ public class Utils {
 				.desc("Course code for '-a 2' option")
 				.hasArg()
 				.argName("course code")
-				.required()
+				//.required()
 				.build());
 				
 		// add options by using OptionBuilder

@@ -36,18 +36,21 @@ public class Student {
 		return semesterByYearAndSemester;
 	}
 	
-	public int getNumCourseInNthSemester(int semester) {
+	public int getNumCourseInNthSemester(int semester,int start, int end) {
 		HashMap<String,Integer>check;
 		int count = 0;
 		
 		check = semesterByYearAndSemester;
 		for(Course course:coursesTaken) {
 			String year = String.valueOf(course.setteryearTaken());
-			String Semester = String.valueOf(course.settersemesterCourseTaken());
-			String yearWithSemester = year + "-" + Semester;
+			int y = course.setteryearTaken();
+			if(y >= start && y <= end){
+				String s = String.valueOf(course.settersemesterCourseTaken());
+				String yearWithSemester = year + "-" + s;
 			
-			if(check.get(yearWithSemester) == semester) {
-				count++;
+				if(check.get(yearWithSemester) == semester) {
+					count++;
+				}
 			}
 		}
 		return count;

@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
 import edu.handong.analysis.utils.NotEnoughArgumentException;
@@ -25,14 +23,14 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	public void run(String[] args) throws IOException {
 		
-		try {
+		/*try {
 			// when there are not enough arguments from CLI, it throws the NotEnoughArgmentException which must be defined by you. CLI를 실행하여서 입력 값이 원하는 입력값이 아닐 경우 오류 메세지를 따로 너가 정의해서 출력해야 한다.
 			if(args.length<2)
 				throw new NotEnoughArgumentException();
 		} catch (NotEnoughArgumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(0);
-		}
+		}*/
 		
 		//String dataPath = args[0]; // csv file to be analyzed 입력 받은 파일의 장소를 저장하는 스트링
 		ArrayList<String> lines = Utils.getLines(args, true); //파일을 읽어들여서 리스트에 저장하는 코드(단, true일때 첫번째 라인은 저장하지 않음)
@@ -47,7 +45,7 @@ public class HGUCoursePatternAnalyzer {
 		String analysis = Utils.setterAnalysis();
 		
 		ArrayList<String> linesToBeSaved;
-		if(analysis == "1") {
+		if(analysis.equals("1")) {
 			// Generate result lines to be saved.
 			 linesToBeSaved = countNumberOfCoursesTakenInEachSemester(sortedStudents,start,end);
 		}
@@ -139,7 +137,7 @@ public class HGUCoursePatternAnalyzer {
 		    Semester = student.getSemestersByYearAndSemester(start,end);
 		    
 		    for(int i = 1; i < Semester.size()+1; i++) {
-		    	out.add(key + "," + Semester.size() + "," + i + "," + student.getNumCourseInNthSemester(i));
+		    	out.add(key + "," + Semester.size() + "," + i + "," + student.getNumCourseInNthSemester(i,start,end));
 		    }
 		}
 		return out; // do not forget to return a proper variable.
@@ -184,22 +182,24 @@ public class HGUCoursePatternAnalyzer {
 				if(year == s) {
 					if(course.settersemesterCourseTaken() == 1) {
 						Take1++;
-						if(code == course.settercourseCode()) codeCount1++;
+						if(code.equals(course.settercourseCode())) codeCount1++;
 					}
 					else if(course.settersemesterCourseTaken() == 2) {
 						Take2++;
-						if(code == course.settercourseCode()) codeCount2++;
+						if(code.equals(course.settercourseCode())) codeCount2++;
 					}
 					else if(course.settersemesterCourseTaken() == 3) {
 						Take3++;
-						if(code == course.settercourseCode()) codeCount3++;
+						if(code.equals(course.settercourseCode())) codeCount3++;
 					}
 					else if(course.settersemesterCourseTaken() == 4) {
 						Take4++;
-						if(code == course.settercourseCode()) codeCount4++;
+						if(code.equals(course.settercourseCode())) codeCount4++;
 					}
 				}
-				name.add(course.settercourseName());
+				if(code.equals(course.settercourseCode())){
+					name.add(course.settercourseName());
+				}
 			}
 			TotalStudent.add(Take1);
 			TotalStudent.add(Take2);
@@ -212,12 +212,21 @@ public class HGUCoursePatternAnalyzer {
 			s++;
 		}
 		
-		 for(int i = 0; i < TotalStudent.size()/4; i++) {
-			 int number = 1+4*i;
-			 int TotalStudents = TotalStudent.get(number);
-			 int StudentsTaken = count.get(number);
+		 for(int i = 0; i < TotalStudent.size()/4; i++) {		 
+			 double num1 = count.get(4*i)/(double)TotalStudent.get(4*i)*100;
+			 double num2 = count.get(1+4*i)/(double)TotalStudent.get(1+4*i)*100;
+			 double num3 = count.get(2+4*i)/(double)TotalStudent.get(2+4*i)*100;
+			 double num4 = count.get(3+4*i)/(double)TotalStudent.get(3+4*i);
+			 String n1 = String.format("%.1f", num1)+ "%";
+			 String n2 = String.format("%.1f", num2)+ "%";
+			 String n3 = String.format("%.1f", num3)+ "%";
+			 String n4 = String.format("%.1f", num4)+ "%";
 			 
-		    	out.add(String.valueOf(start)+","+String.valueOf(1)+","+code+","+name.get(0)+);
+			 out.add(String.valueOf(start)+","+String.valueOf(1)+","+code+","+name.get(0)+ ","+TotalStudent.get(4*i)+","+count.get(4*i)+","+n1);
+			 out.add(String.valueOf(start)+","+String.valueOf(2)+","+code+","+name.get(0)+ ","+TotalStudent.get(1+4*i)+","+count.get(1+4*i)+","+n2);
+			 out.add(String.valueOf(start)+","+String.valueOf(3)+","+code+","+name.get(0)+ ","+TotalStudent.get(2+4*i)+","+count.get(2+4*i)+","+n3);
+			 out.add(String.valueOf(start)+","+String.valueOf(4)+","+code+","+name.get(0)+ ","+TotalStudent.get(3+4*i)+","+count.get(3+4*i)+","+n4);
+		    	start++;
 		    }
 		
 		
