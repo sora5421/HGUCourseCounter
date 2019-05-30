@@ -209,7 +209,7 @@ public class HGUCoursePatternAnalyzer {
 			count.add(codeCount2);
 			count.add(codeCount3);
 			count.add(codeCount4);
-			s++;
+			//s++;
 		}
 		
 		 for(int i = 0; i < TotalStudent.size()/4; i++) {		 
